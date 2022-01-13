@@ -4,7 +4,9 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import trackersConfig from './config.json';
+import * as path from 'path';
+
+const trackersConfig = require(path.join(process.cwd(), 'snowplow-config.json'));
 
 // import trackPagePingExtended from './custom_tracker/page_ping_extended';
 
