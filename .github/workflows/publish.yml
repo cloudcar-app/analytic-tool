@@ -1,8 +1,9 @@
 name: Publish to npm Registry
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - master
 
 jobs:
   publish-npm:
