@@ -1,0 +1,17 @@
+{
+  "name": "analytic-tool",
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "tests/**/*"
+  ],
+  "compilerOptions": {
+      "target": "ES2018",
+      "module": "CommonJS",
+      "outDir": "./dist",
+      "declaration": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true
+  }
+}
