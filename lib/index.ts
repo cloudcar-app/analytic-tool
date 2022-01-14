@@ -6,8 +6,6 @@ import {
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
 import trackersConfig from './config.json';
 
-// import trackPagePingExtended from './custom_tracker/page_ping_extended';
-
 function snowplowService(collectorAddress: string): void {
     newTracker('cloudcar', collectorAddress, {
         appId: 'cloudcar-snowplow',
