@@ -22,8 +22,9 @@ const trackParticularClicks = (config: TrackParticularClicks): void => {
   const selectors: string = config.selectors.join(', ');
   setInterval(() => {
     let newElements: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
-    relevantElements.push(...newElements.filter((el: Element) => !relevantElements.includes(el)));
-    relevantElements.forEach((el: Element) => {
+    let filteredElements: Array<Element> = newElements.filter((el: Element) => !relevantElements.includes(el));
+    relevantElements.push(...filteredElements);
+    filteredElements.forEach((el: Element) => {
       el.addEventListener('click', sendEvent);
     }) 
   }, 500)
