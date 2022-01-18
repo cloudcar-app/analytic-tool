@@ -1,5 +1,6 @@
 import { generateJson } from '../tools/generateJson';
 import { TrackTextSelection } from '../config/configTypes';
+import axios from 'axios';
 
 const trackTextSelection = (config: TrackTextSelection): void => {
   let contextMenu: boolean = false;
@@ -26,12 +27,10 @@ const trackTextSelection = (config: TrackTextSelection): void => {
           },
           "text_selection"
         );
-        fetch(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, {
-          method: "post",
-          body: JSON.stringify(eventJson),
-          headers: {
-            "Content-Type": "application/json",
-          },
+        axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`,
+          eventJson
+        ).catch((error) => {
+          console.log(error);
         });
       }, 5000);
     }

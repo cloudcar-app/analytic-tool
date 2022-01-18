@@ -1,37 +1,36 @@
 import {
-	newTracker,
-	trackPageView,
-	enableActivityTracking,
+    newTracker,
+    trackPageView,
+    enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import { trackersConfig } from './config/config';
 import trackTextSelection from './custom_trackers/text_selection';
-
+import { SnowplowConfig } from './config/configTypes'
 declare global {
-interface Window {
-		COLLECTOR_ADDRESS: string;
-}
+    interface Window {
+      COLLECTOR_ADDRESS: string;
+    }
+  }
+
+export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
+    newTracker('cloudcar', collectorAddress, {
+        appId: 'cloudcar-snowplow',
+        plugins: [DebuggerPlugin()],
+        platform: 'web',
+        sessionCookieTimeout: 3600,
+        contexts: {
+          webPage: true,
+        },
+    });
+    if (config.enableActivityTracking) {
+        enableActivityTracking(config.enableActivityTracking);
+    }
+    if (config.trackPageView) {
+        trackPageView();
+    }
+    if (config.trackTextSelection) {
+        trackTextSelection(config.trackTextSelection)
+    }
 }
 
-function snowplowService(collectorAddress: string): void {
-	newTracker('cloudcar', collectorAddress, {
-			appId: 'cloudcar-snowplow',
-			plugins: [DebuggerPlugin()],
-			platform: 'web',
-			sessionCookieTimeout: 3600,
-			contexts: {
-			webPage: true,
-			},
-	});
-	if (trackersConfig.enableActivityTracking) {
-			enableActivityTracking(trackersConfig.enableActivityTracking);
-	}
-	if (trackersConfig.trackPageView) {
-			trackPageView();
-	}
-	if (trackersConfig.trackTextSelection) {
-			trackTextSelection(trackersConfig.trackTextSelection)
-	}
-}
-
-export default snowplowService;
+export { SnowplowConfig };
