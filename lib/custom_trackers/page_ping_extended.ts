@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { generateJson } from '../tools/generateJson';
+import { TrackPagePingExtended } from '../config/configTypes';
 
 // User has switched back to the tab
 const onFocus = (focusInterval: number[]) => {
@@ -11,11 +12,10 @@ const onBlur = (focusInterval: number[]) => {
   focusInterval.push(new Date().getTime());
 };
 
-const trackPagePingExtended = (
-  time_interval: number,
-  mousePosInterval: number,
-  collector: string
-) => {
+const trackPagePingExtended = ( config :TrackPagePingExtended ): void => {
+  
+  const time_interval: number = config.time_interval
+  const mousePosInterval: number = config.mousePosInterval
   // Focus intervals
   const now: number = new Date().getTime();
   let focusInterval: number[] = [now];
@@ -49,7 +49,7 @@ const trackPagePingExtended = (
       },
       'page_ping_extended'
     );
-    fetch(collector, {
+    fetch(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, {
       method: 'post',
       body: JSON.stringify(event_json),
       headers: {
