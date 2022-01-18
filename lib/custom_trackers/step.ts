@@ -27,7 +27,7 @@ function sendEvent(){
 
 const trackStep = (config: TrackStep) => {
   startTime = (new Date()).getTime()
-  
+
   let relevantBtnStep: Array<Element> = [];
   const selectors: string = config.selectors.join(', ');
 
@@ -37,9 +37,7 @@ const trackStep = (config: TrackStep) => {
     relevantBtnStep.push(...temp);
 
     temp.forEach((btnStep: Element) => {
-        btnStep.addEventListener('click', () => {
-            sendEvent()
-        });
+        btnStep.addEventListener('click', sendEvent);
     })
   }, 500)
 };
