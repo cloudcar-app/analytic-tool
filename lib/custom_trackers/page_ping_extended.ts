@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { generateJson } from '../tools/generateJson';
 import { TrackPagePingExtended } from '../config/configTypes';
+import axios from 'axios';
 
 // User has switched back to the tab
 const onFocus = (focusInterval: number[]) => {
@@ -49,20 +50,13 @@ const trackPagePingExtended = ( config :TrackPagePingExtended ): void => {
       },
       'page_ping_extended'
     );
-    fetch(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, {
-      method: 'post',
-      body: JSON.stringify(event_json),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, event_json)
+    .catch((error) => {
+      console.error(error);
+      });
     focusInterval = [];
     mousePos = [];
   }, time_interval * 1000);
 };
 
 export default trackPagePingExtended;
-function fetch(collector: string, arg1: { method: string; body: string; headers: { 'Content-Type': string; }; }) {
-  throw new Error('Function not implemented.');
-}
-

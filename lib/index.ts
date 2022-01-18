@@ -4,7 +4,7 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import { trackersConfig } from './config/config';
+import { SnowplowConfig } from './config/configTypes'
 
 import trackPagePingExtended from './custom_trackers/page_ping_extended';
 
@@ -14,7 +14,7 @@ declare global {
     }
 }
 
-function enableSnowplow(collectorAddress: string): void {
+export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
         appId: 'cloudcar-snowplow',
         plugins: [DebuggerPlugin()],
@@ -24,16 +24,16 @@ function enableSnowplow(collectorAddress: string): void {
         webPage: true,
         },
     });
-    if (trackersConfig.enableActivityTracking) {
-        enableActivityTracking(trackersConfig.enableActivityTracking);
+    if (config.enableActivityTracking) {
+        enableActivityTracking(config.enableActivityTracking);
     }
-    if (trackersConfig.trackPageView) {
+    if (config.trackPageView) {
         trackPageView();
     }
-    if (trackersConfig.trackPagePingExtended) {
-        trackPagePingExtended(trackersConfig.trackPagePingExtended)
+    if (config.trackPagePingExtended) {
+        trackPagePingExtended(config.trackPagePingExtended)
     }
 }
 
-export default enableSnowplow;
+export { SnowplowConfig };
   
