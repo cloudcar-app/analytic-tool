@@ -4,35 +4,33 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import trackersConfig from './config.json';
-import trackPurchaseButtonClick from './custom_trackers/purchase_button_click'
-
+import trackPurchaseButtonClick from './custom_trackers/purchase_button_click';
+import { SnowplowConfig } from './config/configTypes'
 declare global {
-	interface Window {
-			COLLECTOR_ADDRESS: string;
-	}
-}
+    interface Window {
+      COLLECTOR_ADDRESS: string;
+    }
+  }
 
-function snowplowService(collectorAddress: string): void {
+export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
         appId: 'cloudcar-snowplow',
         plugins: [DebuggerPlugin()],
         platform: 'web',
         sessionCookieTimeout: 3600,
         contexts: {
-        webPage: true,
+          webPage: true,
         },
     });
-    if (trackersConfig.enableActivityTracking) {
-        enableActivityTracking(trackersConfig.enableActivityTracking);
+    if (config.enableActivityTracking) {
+        enableActivityTracking(config.enableActivityTracking);
     }
-    if (trackersConfig.trackPageView) {
+    if (config.trackPageView) {
         trackPageView();
     }
-    if (trackersConfig.trackPurchaseButtonClick) {
-        trackPurchaseButtonClick(trackersConfig.trackPurchaseButtonClick)
+    if (config.trackPurchaseButtonClick) {
+        trackPurchaseButtonClick(config.trackPurchaseButtonClick)
     }
 }
 
-export default snowplowService;
-  
+export { SnowplowConfig };

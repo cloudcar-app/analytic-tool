@@ -1,5 +1,6 @@
 import { generateJson } from '../tools/generateJson';
 import { TrackPurchaseButtonClick } from '../config/configTypes';
+import axios from 'axios';
 
 declare global {
   interface EventTarget {
@@ -18,27 +19,25 @@ const sendEvent = (ev: Event) => {
     },
     'purchase_button_click'
   );
-  fetch(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, {
-    method: 'post',
-    body: JSON.stringify(eventJson),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).catch((error) => {});
+  axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`,
+    eventJson
+  ).catch((error) => {
+    console.log(error);
+  });
 };
 
 const trackPurchaseButtonClick = (config: TrackPurchaseButtonClick): void => {
   const startTime : number = new Date().getTime()
-  let purchaseButtons: NodeListOf<Element>;
+  let relevantElements: Array<Element> = [];
   const selectors: string = config.selectors.join(', ');
   setInterval(() => {
-    purchaseButtons = window.document.querySelectorAll(selectors);
-    for (let i = 0; i < purchaseButtons.length; i += 1) {
-      const btn = purchaseButtons[i];
-      window.startTime = startTime;
-      btn.addEventListener('click', sendEvent);
-    }
-  }, 5000)
+    let newElements: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
+    let filteredElements: Array<Element> = newElements.filter((el: Element) => !relevantElements.includes(el));
+    relevantElements.push(...filteredElements);
+    filteredElements.forEach((el: Element) => {
+      el.addEventListener('click', sendEvent);
+    }) 
+  }, 500)
 };
 
 export default trackPurchaseButtonClick;
