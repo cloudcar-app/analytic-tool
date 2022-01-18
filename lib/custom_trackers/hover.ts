@@ -1,32 +1,30 @@
 import { generateJson } from '../tools/generateJson';
 import { TrackHover } from '../config/configTypes';
+import axios from 'axios';
 
 let startTime : number = 0;
 let endTime : number = 0
 let totalTime : number = 0
 
 function sendEvent(eventJson: object){
-  fetch(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, {
-    method: "post",
-    body: JSON.stringify(eventJson),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
+  axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, eventJson)
+  .catch((error) => {
+    console.error(error);
+    });
 }
 
 const enterElement = (ev: Event) => {
   startTime = (new Date()).getTime()
 };
 
-const leaveElement = (ev: Event)=>{
+const leaveElement = (element_id: string, inner_text: string)=>{
   endTime =  (new Date()).getTime();
   totalTime = endTime - startTime
   startTime = 0
 
   const eventJson : any = generateJson({
-    element_id: (ev.target instanceof Element) ? ev.target.id : '',
-    inner_text: (ev.target instanceof HTMLElement) ? ev.target.innerText : '',
+    element_id: element_id,
+    inner_text: inner_text,
     time: totalTime 
   }, "hover");
 
@@ -40,15 +38,21 @@ function restarTimer(){
 }
 
 const trackHover= (config :TrackHover):void=> {
-  let listElementHover : NodeListOf<Element>;
-  const selectors: string = (config.selectors as string[]).join(', ');
+  let relevantElementHover: Array<Element> = [];
+  const selectors: string = config.selectors.join(', ');
   setInterval(() => {
-    listElementHover = window.document.querySelectorAll(selectors);
-    for (let i = 0; i < listElementHover.length; i += 1) {
-      const elmHover = listElementHover[i];
+    //Array of elements from query
+    let newElementHover: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
+    //Only elements that are not in relevantElementHover
+    let filterElements: Array<Element> = newElementHover.filter((elmHover: Element) => !relevantElementHover.includes(elmHover))
+    relevantElementHover.push(...filterElements);
+    //Add event to elements
+    filterElements.forEach((elmHover: HTMLElement) => {
       elmHover.addEventListener('mouseenter', enterElement);
-      elmHover.addEventListener('mouseleave', leaveElement);
-    }
+      elmHover.addEventListener('mouseleave',() => {
+        leaveElement(elmHover.id, elmHover.innerText)
+      });
+    })
   }, 5000)
 }
 
