@@ -4,12 +4,13 @@ import axios from 'axios';
 
 declare global {
   interface EventTarget {
-  startTime: number;
+    startTime: number;
   }
   interface Element {
     startTime: number;
   }
 }
+
 const sendEvent = (collector: string, ev: Event) => {
   const currTime : number = new Date().getTime()
   const eventJson: unknown = generateJson(
