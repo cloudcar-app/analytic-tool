@@ -1,6 +1,6 @@
 {
   "name": "@cloudcar-app/analytic-tool",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "This is a library to help on the development for cloud car",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -43,7 +43,7 @@
   "dependencies": {
     "@snowplow/browser-plugin-debugger": "^3.2.1",
     "@snowplow/browser-tracker": "^3.2.1",
-    "app-root-path": "^3.0.0"
+    "axios": "^0.25.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/cloudcar-app"
