@@ -11,10 +11,6 @@ npm i @cloudcar/analytic-tool
 
 Para habilitar la librería en tu proyecto de node es necesario llamar a la función `enableSnowplow`. Esta recibe dos argumentos: un _string_ representando el URL al _collector_ de _Snowplow_ y un objecto correspondiente a la configuración de la librería.
 
-#### Collector
-
-El _collector_ recibe los eventos del usuario y los entrega al _stream_ de datos de la _pipeline_ de _Snowplow_. Este _collector_ posee un URL el cual debe ser entregado a `enableSnowplow` pero además debe ser entregado a una variable global de _window_ llamada `COLLECTOR_ADDRESS`.
-
 #### Configuration
 
 La configuración se encarga de ajustar el uso de _Snowplow_ a las preferencias del proyecto. La configuración es un objeto de tipo `SnowplowConfig` con las configuraciones de cada tracker (también objetos). Si la configuración para un tracker está, entonces esta se implementará en la app. Si el tracker no recibe configuración basta con entregar un objeto vacío y será implementado. Un ejemplo de configuración es la que se ve a continuación:
@@ -42,15 +38,7 @@ import App from 'App';
 import { enableSnowplow } from '@cloudcar-app/analytic-tool';
 import trackersConfig from './snowplow_config';
 
-declare global {
-  interface Window {
-    COLLECTOR_ADDRESS: string;
-  }
-}
-
 const COLLECTOR_ADDRESS: string = process.env.REACT_APP_COLLECTOR_ADDRESS ?? '';
-
-window.COLLECTOR_ADDRESS = window.COLLECTOR_ADDRESS || COLLECTOR_ADDRESS;
 
 enableSnowplow(COLLECTOR_ADDRESS, trackersConfig);
 // Fin implementación libería
