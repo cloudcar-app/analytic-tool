@@ -10,7 +10,7 @@ declare global {
     startTime: number;
   }
 }
-const sendEvent = (ev: Event) => {
+const sendEvent = (collector: string, ev: Event) => {
   const currTime : number = new Date().getTime()
   const eventJson: unknown = generateJson(
     {
@@ -19,14 +19,14 @@ const sendEvent = (ev: Event) => {
     },
     'purchase_button_click'
   );
-  axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`,
+  axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`,
     eventJson
   ).catch((error) => {
     console.log(error);
   });
 };
 
-const trackPurchaseButtonClick = (config: TrackPurchaseButtonClick): void => {
+const trackPurchaseButtonClick = (collector: string, config: TrackPurchaseButtonClick): void => {
   const startTime : number = new Date().getTime()
   let relevantElements: Array<Element> = [];
   const selectors: string = config.selectors.join(', ');
@@ -35,7 +35,9 @@ const trackPurchaseButtonClick = (config: TrackPurchaseButtonClick): void => {
     let filteredElements: Array<Element> = newElements.filter((el: Element) => !relevantElements.includes(el));
     relevantElements.push(...filteredElements);
     filteredElements.forEach((el: Element) => {
-      el.addEventListener('click', sendEvent);
+      el.addEventListener('click', (ev: Event) => {
+        sendEvent(collector, ev)
+      });
     }) 
   }, 500)
 };

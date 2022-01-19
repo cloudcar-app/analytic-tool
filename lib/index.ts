@@ -27,7 +27,8 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         trackPageView();
     }
     if (config.trackPurchaseButtonClick) {
-        trackPurchaseButtonClick(config.trackPurchaseButtonClick)
+        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick)
+    }
     if (config.trackParticularClicks) {
         trackParticularClicks(collectorAddress, config.trackParticularClicks)
     }
