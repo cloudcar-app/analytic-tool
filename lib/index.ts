@@ -6,11 +6,12 @@ import {
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
 import trackParticularClicks from './custom_trackers/particular_clicks';
 import { SnowplowConfig } from './config/configTypes'
+
 declare global {
     interface Window {
-      COLLECTOR_ADDRESS: string;
+        COLLECTOR_ADDRESS: string;
     }
-  }
+}
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
