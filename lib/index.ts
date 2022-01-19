@@ -4,13 +4,11 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import trackPurchaseButtonClick from './custom_trackers/purchase_button_click';
+import {
+    trackParticularClicks,
+    trackPurchaseButtonClick
+} from './custom_trackers/index';
 import { SnowplowConfig } from './config/configTypes'
-declare global {
-    interface Window {
-      COLLECTOR_ADDRESS: string;
-    }
-  }
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
@@ -30,6 +28,8 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     }
     if (config.trackPurchaseButtonClick) {
         trackPurchaseButtonClick(config.trackPurchaseButtonClick)
+    if (config.trackParticularClicks) {
+        trackParticularClicks(collectorAddress, config.trackParticularClicks)
     }
 }
 
