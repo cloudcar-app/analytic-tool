@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-const sendEvent = (collector: string, ev: Event) => {
+const sendEvent = (collector: string, event: Event) => {
   const currTime : number = new Date().getTime()
   const eventJson: unknown = generateJson(
     {
@@ -33,11 +33,11 @@ const trackPurchaseButtonClick = (collector: string, config: TrackPurchaseButton
   const selectors: string = config.selectors.join(', ');
   setInterval(() => {
     let newElements: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
-    let filteredElements: Array<Element> = newElements.filter((el: Element) => !relevantElements.includes(el));
+    let filteredElements: Array<Element> = newElements.filter((element: Element) => !relevantElements.includes(element));
     relevantElements.push(...filteredElements);
-    filteredElements.forEach((el: Element) => {
-      el.addEventListener('click', (ev: Event) => {
-        sendEvent(collector, ev)
+    filteredElements.forEach((element: Element) => {
+      element.addEventListener('click', (event: Event) => {
+        sendEvent(collector, event)
       });
     }) 
   }, 500)

@@ -15,7 +15,7 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         appId: 'cloudcar-snowplow',
         plugins: [DebuggerPlugin()],
         platform: 'web',
-        sessionCookieTimeout: 3600,
+        sessionCookieTimeout: 3600, // in seconds
         contexts: {
           webPage: true,
         },
