@@ -13,7 +13,7 @@ const onBlur = (focusInterval: number[]) => {
   focusInterval.push(new Date().getTime());
 };
 
-const trackPagePingExtended = ( config :TrackPagePingExtended ): void => {
+const trackPagePingExtended = (collector: string, config :TrackPagePingExtended ): void => {
   
   const time_interval: number = config.time_interval
   const mousePosInterval: number = config.mousePosInterval
@@ -29,12 +29,13 @@ const trackPagePingExtended = ( config :TrackPagePingExtended ): void => {
 
   window.addEventListener('focus', focused);
   window.addEventListener('blur', blurred);
+
   // Mouse positions
   let mousePos: number[] = [];
   const currentMousePos: number[] = [0, 0];
-  window.addEventListener('mousemove', (e) => {
-    currentMousePos[0] = e.offsetX;
-    currentMousePos[1] = e.offsetY;
+  window.addEventListener('mousemove', (event: Event) => {
+    currentMousePos[0] = event.offsetX;
+    currentMousePos[1] = event.offsetY;
   });
 
   setInterval(() => {
@@ -50,7 +51,7 @@ const trackPagePingExtended = ( config :TrackPagePingExtended ): void => {
       },
       'page_ping_extended'
     );
-    axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, event_json)
+    axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`, event_json)
     .catch((error) => {
       console.error(error);
       });

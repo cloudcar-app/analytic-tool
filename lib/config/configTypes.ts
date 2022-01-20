@@ -1,19 +1,23 @@
-export interface SnowplowConfig {
+export type EnableActivityTracking = {
+    minimumVisitLength: number;
+    heartbeatDelay: number;
+}
+
+export type SnowplowConfig = {
     trackPageView?: TrackPageView;
     enableActivityTracking?: EnableActivityTracking;
     trackParticularClicks?: TrackParticularClicks;
     trackPagePingExtended?: TrackPagePingExtended;
 }
-export interface TrackPageView {
+
+export type TrackPageView = {
 }
-export interface EnableActivityTracking {
-    minimumVisitLength: number;
-    heartbeatDelay: number;
-}
-export interface TrackParticularClicks {
+
+export type TrackParticularClicks = {
     selectors?: (string)[] | null;
 }
-export interface TrackPagePingExtended {
+
+export type TrackPagePingExtended = {
     time_interval: number;
     mousePosInterval: number;
 }
