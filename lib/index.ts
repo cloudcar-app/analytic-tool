@@ -4,20 +4,17 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import trackTextSelection from './custom_trackers/text_selection';
+import {
+    trackTextSelection
+} from './custom_trackers/index';
 import { SnowplowConfig } from './config/configTypes'
-declare global {
-    interface Window {
-      COLLECTOR_ADDRESS: string;
-    }
-  }
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
         appId: 'cloudcar-snowplow',
         plugins: [DebuggerPlugin()],
         platform: 'web',
-        sessionCookieTimeout: 3600,
+        sessionCookieTimeout: 3600, // in seconds
         contexts: {
           webPage: true,
         },
@@ -29,7 +26,7 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         trackPageView();
     }
     if (config.trackTextSelection) {
-        trackTextSelection(config.trackTextSelection)
+        trackTextSelection(collectorAddress, config.trackTextSelection)
     }
 }
 

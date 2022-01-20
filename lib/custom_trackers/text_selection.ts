@@ -2,39 +2,39 @@ import { generateJson } from '../tools/generateJson';
 import { TrackTextSelection } from '../config/configTypes';
 import axios from 'axios';
 
-const trackTextSelection = (config: TrackTextSelection): void => {
+const trackTextSelection = (collector: string, config: TrackTextSelection): void => {
   let contextMenu: boolean = false;
   let selection: string = "";
   let copySelection: string = "";
-  document.body.addEventListener("copy", (e: Event) => {
+  document.body.addEventListener("copy", (event: Event) => {
     copySelection = document.getSelection()!.toString();
-    e.preventDefault();
+    event.preventDefault();
   });
-  document.body.addEventListener("contextmenu", (e: Event) => {
+  document.body.addEventListener("contextmenu", (event: Event) => {
     contextMenu = true;
   });
-  document.body.addEventListener("mouseup", function (e: MouseEvent) {
+  document.body.addEventListener("mouseup", function (event: MouseEvent) {
     let selectedText: string = window.getSelection()!.toString();
-    if (selectedText !== "" && e.which === 1 && !contextMenu) {
+    if (selectedText !== "" && event.which === 1 && !contextMenu) {
       selection = window.getSelection()!.toString();
       setTimeout(() => {
         const eventJson = generateJson(
           {
             text: selection.length > 100 ? selection.slice(0, 100) : selection,
             copied: selection === copySelection ? true : false,
-            pos_x: e.pageX,
-            pos_y: e.pageY,
+            pos_x: event.pageX,
+            pos_y: event.pageY,
           },
           "text_selection"
         );
-        axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`,
+        axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`,
           eventJson
         ).catch((error) => {
           console.log(error);
         });
       }, 5000);
     }
-    if (e.which == 1) {
+    if (event.which == 1) {
       contextMenu = false;
     }
   });
