@@ -1,4 +1,5 @@
 import { generateJson } from '../tools/generateJson';
+import { findParentBySelector } from '../tools/findParentBySelector';
 import { TrackPurchaseButtonClick } from '../config/configTypes';
 import axios from 'axios';
 
@@ -11,12 +12,13 @@ declare global {
   }
 }
 
-const sendEvent = (collector: string, event: Event) => {
+const sendEvent = (startTime: number, collector: string, event: Event) => {
   const currTime : number = new Date().getTime()
+  const buttonContainer: Node | null = (event.target instanceof Element) ? findParentBySelector(event.target, '.cloudcar_button_container') : null
   const eventJson: unknown = generateJson(
     {
-      id_car: '1',
-      time_until_click: currTime - window.startTime,
+      id_car: (buttonContainer) ? (<Element> buttonContainer).getAttribute('data-car-group-id') : 'null',
+      time_until_click: currTime - startTime,
     },
     'purchase_button_click'
   );
@@ -37,7 +39,7 @@ const trackPurchaseButtonClick = (collector: string, config: TrackPurchaseButton
     relevantElements.push(...filteredElements);
     filteredElements.forEach((element: Element) => {
       element.addEventListener('click', (event: Event) => {
-        sendEvent(collector, event)
+        sendEvent(startTime, collector, event)
       });
     }) 
   }, 500)
