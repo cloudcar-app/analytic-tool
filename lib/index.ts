@@ -5,14 +5,7 @@ import {
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
 import { SnowplowConfig } from './config/configTypes'
-
 import trackHover from './custom_trackers/hover';
-
-declare global {
-    interface Window {
-      COLLECTOR_ADDRESS: string;
-    }
-}
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
@@ -31,7 +24,7 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         trackPageView();
     }
     if(config.trackHover){
-        trackHover(config.trackHover);
+        trackHover(collectorAddress, config.trackHover);
     }
 }
 
