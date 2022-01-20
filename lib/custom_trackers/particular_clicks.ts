@@ -2,10 +2,10 @@ import { generateJson } from '../tools/generateJson';
 import { TrackParticularClicks } from '../config/configTypes';
 import axios from 'axios';
 
-const sendEvent = (collector: string, ev: Event) => {
+const sendEvent = (collector: string, event: Event) => {
   const eventJson: unknown = generateJson(
     {
-      identifier: (ev.target instanceof Element) ? ev.target.id : '',
+      identifier: (event.target instanceof Element) ? event.target.id : '',
       step_name: 'none',
     },
     'particular_clicks'
@@ -22,11 +22,11 @@ const trackParticularClicks = (collector: string, config: TrackParticularClicks)
   const selectors: string = config.selectors.join(', ');
   setInterval(() => {
     let newElements: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
-    let filteredElements: Array<Element> = newElements.filter((el: Element) => !relevantElements.includes(el));
+    let filteredElements: Array<Element> = newElements.filter((element: Element) => !relevantElements.includes(element));
     relevantElements.push(...filteredElements);
-    filteredElements.forEach((el: Element) => {
-      el.addEventListener('click', (ev: Event) => {
-        sendEvent(collector, ev);
+    filteredElements.forEach((element: Element) => {
+      element.addEventListener('click', (event: Event) => {
+        sendEvent(collector, event);
       });
     }) 
   }, 500)

@@ -74,8 +74,19 @@ Este es un tracker personalizado de CloudCar y envía eventos al collector cada 
 trackParticularClicks: {
     selectors: [
         "div.VerticalStepContainer:nth-child(1)",
-        "#botonComprar",
         "img"
+    ]
+}
+```
+
+#### trackPurchaseButtonClick
+
+Este es otro tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario hace click en el botón de compra. Su configuración requiere de una lista de selectores correspondientes al botón de compra. El evento que se envía consiste de un identificador del vehículo a comprar y el tiempo que se demora el usuario en hacer click en el botón desde que entró a la página.
+
+```
+trackPurchaseButtonClick: {
+    selectors: [
+        "#botonComprar"
     ]
 }
 ```

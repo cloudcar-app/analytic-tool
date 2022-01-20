@@ -4,7 +4,10 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
-import trackParticularClicks from './custom_trackers/particular_clicks';
+import {
+    trackParticularClicks,
+    trackPurchaseButtonClick
+} from './custom_trackers/index';
 import { SnowplowConfig } from './config/configTypes'
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
@@ -12,7 +15,7 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         appId: 'cloudcar-snowplow',
         plugins: [DebuggerPlugin()],
         platform: 'web',
-        sessionCookieTimeout: 3600,
+        sessionCookieTimeout: 3600, // in seconds
         contexts: {
           webPage: true,
         },
@@ -22,6 +25,9 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     }
     if (config.trackPageView) {
         trackPageView();
+    }
+    if (config.trackPurchaseButtonClick) {
+        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick)
     }
     if (config.trackParticularClicks) {
         trackParticularClicks(collectorAddress, config.trackParticularClicks)
