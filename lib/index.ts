@@ -7,12 +7,6 @@ import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
 import trackStep from './custom_trackers/step';
 import { SnowplowConfig } from './config/configTypes'
 
-declare global {
-    interface Window {
-      COLLECTOR_ADDRESS: string;
-    }
-  }
-
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
         appId: 'cloudcar-snowplow',
@@ -30,7 +24,7 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         trackPageView();
     }
     if (config.trackStep) {
-        trackStep(config.trackStep);
+        trackStep(collectorAddress, config.trackStep);
     }
 }
 

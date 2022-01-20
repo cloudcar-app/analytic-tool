@@ -11,17 +11,17 @@ function finishTimer()
   return totalTime
 }
 
-function sendEvent(){
+function sendEvent(collector: string){
   const eventJson : any = generateJson({last_step: window.location.pathname, time: finishTimer()}, "step");
 
-  axios.post(`${window.COLLECTOR_ADDRESS}/com.snowplowanalytics.snowplow/tp2`, eventJson)
+  axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`, eventJson)
   .catch((error) => {
     console.error(error);
     });
   startTime = (new Date()).getTime()
 }
 
-const trackStep = (config: TrackStep) => {
+const trackStep = (collector: string, config: TrackStep) => {
   startTime = (new Date()).getTime()
 
   let relevantBtnStep: Array<Element> = [];
@@ -35,7 +35,9 @@ const trackStep = (config: TrackStep) => {
     relevantBtnStep.push(...filterElements);
     //Add event to elements
     filterElements.forEach((btnStep: Element) => {
-        btnStep.addEventListener('click', sendEvent);
+        btnStep.addEventListener('click', () => {
+          sendEvent(collector)
+        });
     })
   }, 500)
 };
