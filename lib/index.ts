@@ -21,7 +21,10 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         },
     });
     if (config.enableActivityTracking) {
-        enableActivityTracking(config.enableActivityTracking);
+        enableActivityTracking((typeof config.enableActivityTracking === 'boolean') ? {
+            minimumVisitLength: 30,
+            heartbeatDelay: 10,
+        } : config.enableActivityTracking);
     }
     if (config.trackPageView) {
         trackPageView();
