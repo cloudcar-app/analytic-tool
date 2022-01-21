@@ -10,6 +10,7 @@ export const getUnseenElements = (selectors: (Selector)[], relevantElements: (Tr
         newElements.push(
         ...queryElements.map((element: Element) => ({
             id: selector.selector_id,
+            step: (selector.step) ? selector.step : '',
             element: element,
         }))
         ) 

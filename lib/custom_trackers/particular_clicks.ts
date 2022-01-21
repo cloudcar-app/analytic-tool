@@ -6,11 +6,11 @@ import {
 } from '../config/configTypes';
 import axios from 'axios';
 
-const sendEvent = (collector: string, id: string, event: Event) => {
+const sendEvent = (collector: string, id: string, step: string, event: Event) => {
   const eventJson: unknown = generateJson(
     {
       selector_id: id,
-      step: 'none',
+      step: step,
     },
     'particular_clicks'
   );
@@ -28,7 +28,7 @@ const trackParticularClicks = (collector: string, config: TrackParticularClicks)
     relevantElements.push(...newElements);
     newElements.forEach((trackedElement: TrackedElement) => {
       trackedElement.element.addEventListener('click', (event: Event) => {
-        sendEvent(collector, trackedElement.id, event);
+        sendEvent(collector, trackedElement.id, trackedElement.step, event);
       });
     }) 
   }, 500)

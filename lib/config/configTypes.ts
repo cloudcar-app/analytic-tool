@@ -1,6 +1,7 @@
 export type Selector = {
     selector_id: string,
     css_selector: string,
+    step?: string,
 }
 
 export type EnableActivityTracking = {
@@ -87,6 +88,7 @@ export type SnowplowConfig = {
 export type TrackedElement = {
     id: string;
     element: Element;
+    step: string;
 }
 
 export type TrackParticularClicks = {
