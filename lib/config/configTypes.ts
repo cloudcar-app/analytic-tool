@@ -83,7 +83,17 @@ export type SnowplowConfig = {
         ```
      */
     trackPurchaseButtonClick?: TrackPurchaseButtonClick;
-    // TODO: DOCUMENTAR TEXT SELECTION
+    /**
+     * Este es un tracker personalizado de CloudCar y envía eventos al 
+     * collector cada vez que el usuario selecciona texto. Su configuración 
+     * solo requiere de un booleano para definir si se implementa o no. El 
+     * evento que se envía contiene el texto seleccionado, la posicion del 
+     * texto en la pantalla y si el usuario copió ese texto o no.
+
+        ```
+        trackTextSelection: true
+        ```
+     */
     trackTextSelection?: boolean;
 }
 

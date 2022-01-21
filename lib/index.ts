@@ -31,13 +31,13 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         trackPageView();
     }
     if (config.trackTextSelection) {
-        trackTextSelection(collectorAddress, config.trackTextSelection)
+        trackTextSelection(collectorAddress);
     }
     if (config.trackPurchaseButtonClick) {
-        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick)
+        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick);
     }
     if (config.trackParticularClicks) {
-        trackParticularClicks(collectorAddress, config.trackParticularClicks)
+        trackParticularClicks(collectorAddress, config.trackParticularClicks);
     }
 }
 
