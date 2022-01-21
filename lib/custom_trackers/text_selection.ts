@@ -1,5 +1,4 @@
 import { generateJson } from '../tools/generateJson';
-import { TrackTextSelection } from '../config/configTypes';
 import axios from 'axios';
 
 const trackTextSelection = (collector: string): void => {
