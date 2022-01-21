@@ -1,9 +1,5 @@
-function collectionHas(a: Array<Element>, b: Node): boolean { //helper function (see below)
-    for(var i = 0, len = a.length; i < len; i ++) {
-        if(a[i] == b) return true;
-    }
-    return false;
-}
+import { collectionHas } from "./collectionHas";
+
 export function findParentBySelector(elm: Element, selector: string): Node | null {
     const all: Array<Element> = Array.from(window.document.querySelectorAll(selector));
     let cur: Node | null = elm.parentNode;
