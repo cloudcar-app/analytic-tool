@@ -51,9 +51,9 @@ Por defecto, todos los eventos de _Snowplow_ tienen información mínima que tod
 
 #### trackPageView
 
-Este tracker es propio de _Snowplow_ y corresponde al evento de abrir una página. Este evento captura el URL, referrer y título de la página. Este no necesita una configuración por lo que para ser implementado basta con incluir un objeto vacío en la configuración de _Snowplow_.
+Este tracker es propio de _Snowplow_ y corresponde al evento de abrir una página. Este evento captura el URL, referrer y título de la página. Este no necesita una configuración por lo que para ser implementado o no basta con incluir un booleano en la configuración de _Snowplow_.
 ```
-trackPageView: {}
+trackPageView: true
 ```
 
 #### enableActivityTracking
@@ -68,15 +68,21 @@ enableActivityTracking: {
 
 #### trackParticularClicks
 
-Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario hace click en algún elemento HTML de interés para la organización. Su configuración requiere de una lista de selectores correspondientes a los elementos HTML que se quieren trackear.
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario hace click en algún elemento HTML de interés para la organización. Su configuración requiere de una lista de selectores correspondientes a los elementos HTML que se quieren trackear, junto con un identificador para reconocerlos más adelante en la base de datos.
 
 ```
 trackParticularClicks: {
     selectors: [
-        "div.VerticalStepContainer:nth-child(1)",
-        "img"
-    ]
-}
+      {
+        selector_id: 'color 1',
+        css_selector: 'div.ant-row:nth-child(4) div:nth-child(1)',
+      },
+      {
+        selector_id: 'color 2',
+        css_selector: 'div.ant-row:nth-child(4) div:nth-child(2)',
+      },
+    ],
+  }
 ```
 
 #### trackPurchaseButtonClick
