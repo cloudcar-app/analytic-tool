@@ -1,12 +1,16 @@
 import { generateJson } from '../tools/generateJson';
-import { TrackParticularClicks } from '../config/configTypes';
+import { getUnseenElements } from '../tools/getUnseenElements';
+import { 
+  TrackParticularClicks,
+  TrackedElement,
+} from '../config/configTypes';
 import axios from 'axios';
 
-const sendEvent = (collector: string, event: Event) => {
+const sendEvent = (collector: string, id: string, step: string, event: Event) => {
   const eventJson: unknown = generateJson(
     {
-      identifier: (event.target instanceof Element) ? event.target.id : '',
-      step_name: 'none',
+      selector_id: id,
+      step: step,
     },
     'particular_clicks'
   );
@@ -18,15 +22,13 @@ const sendEvent = (collector: string, event: Event) => {
 };
 
 const trackParticularClicks = (collector: string, config: TrackParticularClicks): void => {
-  let relevantElements: Array<Element> = [];
-  const selectors: string = config.selectors.join(', ');
+  let relevantElements: Array<TrackedElement> = [];
   setInterval(() => {
-    let newElements: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
-    let filteredElements: Array<Element> = newElements.filter((element: Element) => !relevantElements.includes(element));
-    relevantElements.push(...filteredElements);
-    filteredElements.forEach((element: Element) => {
-      element.addEventListener('click', (event: Event) => {
-        sendEvent(collector, event);
+    let newElements: Array<TrackedElement> = getUnseenElements(config.selectors, relevantElements);
+    relevantElements.push(...newElements);
+    newElements.forEach((trackedElement: TrackedElement) => {
+      trackedElement.element.addEventListener('click', (event: Event) => {
+        sendEvent(collector, trackedElement.id, trackedElement.step, event);
       });
     }) 
   }, 500)

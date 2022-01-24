@@ -5,6 +5,7 @@ import {
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
 import {
+    trackTextSelection,
     trackParticularClicks,
     trackPurchaseButtonClick
 } from './custom_trackers/index';
@@ -21,16 +22,22 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         },
     });
     if (config.enableActivityTracking) {
-        enableActivityTracking(config.enableActivityTracking);
+        enableActivityTracking((typeof config.enableActivityTracking === 'boolean') ? {
+            minimumVisitLength: 30,
+            heartbeatDelay: 10,
+        } : config.enableActivityTracking);
     }
     if (config.trackPageView) {
         trackPageView();
     }
+    if (config.trackTextSelection) {
+        trackTextSelection(collectorAddress);
+    }
     if (config.trackPurchaseButtonClick) {
-        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick)
+        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick);
     }
     if (config.trackParticularClicks) {
-        trackParticularClicks(collectorAddress, config.trackParticularClicks)
+        trackParticularClicks(collectorAddress, config.trackParticularClicks);
     }
 }
 
