@@ -48,7 +48,7 @@ export type SnowplowConfig = {
         * una lista de selectores correspondientes a los elementos HTML que 
         * se quieren trackear, junto con un identificador para reconocerlos 
         * más adelante en la base de datos.
-        
+    
         ```
         trackParticularClicks: {
             selectors: [
@@ -120,9 +120,32 @@ export type SnowplowConfig = {
         ],
     }
     ```
-    */
+    */   
    trackHover?: TrackHover;
-   
+       /**
+    * Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, 
+    * ya sea a través del botón continuar o un botón step. 
+    * Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear.
+    *  El evento que se envía consiste en el nombre step donde estuvo el usuario, el tiempo que permaneció en el step,
+    *  un identificador del elemento y un identificador del la compra (purchaseIntentId).
+       
+       ```
+       trackStep: {
+           selectors: [
+               {
+                   selector_id: 'Next Button',
+                   css_selector: '.BaseButton_Button',
+               },
+               {
+                   selector_id: 'Step Button',
+                   css_selector: '.Widget_ImageHeader',
+               },
+           ],
+       }
+       ```
+       */
+   trackStep?: TrackStep;
+
    trackPagePingExtended?: TrackPagePingExtended;
 }
 
@@ -147,4 +170,8 @@ export type TrackParticularClicks = {
 
 export type TrackPurchaseButtonClick = {
     selectors: (string)[];
+}
+
+export type TrackStep = {
+    selectors?: (Selector)[];
 }
