@@ -43,11 +43,11 @@ export type SnowplowConfig = {
        enableActivityTracking: EnableActivityTracking | boolean;
        /**
         * Este es un tracker personalizado de CloudCar y envía eventos 
-     * al collector cada vez que el usuario hace click en algún elemento 
-     * HTML de interés para la organización. Su configuración requiere de 
-     * una lista de selectores correspondientes a los elementos HTML que 
-     * se quieren trackear, junto con un identificador para reconocerlos 
-     * más adelante en la base de datos.
+        * al collector cada vez que el usuario hace click en algún elemento 
+        * HTML de interés para la organización. Su configuración requiere de 
+        * una lista de selectores correspondientes a los elementos HTML que 
+        * se quieren trackear, junto con un identificador para reconocerlos 
+        * más adelante en la base de datos.
 
         ```
         trackParticularClicks: {
@@ -81,8 +81,8 @@ export type SnowplowConfig = {
             ]
         }
         ```
-     */
-    trackPurchaseButtonClick?: TrackPurchaseButtonClick;
+        */
+       trackPurchaseButtonClick?: TrackPurchaseButtonClick;
     /**
      * Este es un tracker personalizado de CloudCar y envía eventos al 
      * collector cada vez que el usuario selecciona texto. Su configuración 
@@ -95,12 +95,43 @@ export type SnowplowConfig = {
         ```
      */
     trackTextSelection?: boolean;
+    /**
+    * Este es otro tracker personalizado de CloudCar y envía eventos 
+    * al collector cada vez que el usuario hace hover sobre un elemento 
+    * html dentro de la página. 
+    * Su configuración requiere de una lista de selectores 
+    * correspondientes al los distintos elementos HTML que 
+    * se quieren trackear. El evento que se envía 
+    * consiste de un identificador del vehículo observavodo, un identificador del elemento,
+    * el innerText del elemento si es que tiene y el tiempo que el usuario hace hover
+    * sobre este.
+    
+    ```
+    trackHover: {
+        selectors: [
+            {
+                selector_id: 'Purcharse Button',
+                css_selector: '.BaseButton_Button',
+            },
+            {
+                selector_id: 'Car Image',
+                css_selector: '.Widget_ImageHeader',
+            },
+        ],
+    }
+    ```
+    */
+    trackHover?: TrackHover;
 }
 
 export type TrackedElement = {
     id: string;
-    element: Element;
+    element: HTMLElement;
     step: string;
+}
+
+export type TrackHover = {
+    selectors?: (Selector)[];
 }
 
 export type TrackParticularClicks = {
