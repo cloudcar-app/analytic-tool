@@ -1,11 +1,13 @@
 import trackTextSelection from './text_selection';
 import trackParticularClicks from './particular_clicks';
 import trackPurchaseButtonClick from './purchase_button_click';
-import trackStep from './step'
+import trackStep from './step';
+import trackHover from './hover';
 
 export {
     trackTextSelection,
     trackParticularClicks,
     trackPurchaseButtonClick,
     trackStep,
+    trackHover
 };

@@ -12,7 +12,8 @@ import {
     trackTextSelection,
     trackParticularClicks,
     trackPurchaseButtonClick,
-    trackStep
+    trackStep,
+    trackHover
 } from './custom_trackers/index';
 import { SnowplowConfig } from './config/configTypes'
 
@@ -38,6 +39,9 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     }
     if (config.trackStep) {
         trackStep(collectorAddress, config.trackStep);
+    }
+    if(config.trackHover){
+        trackHover(collectorAddress, config.trackHover);
     }
     if (config.trackTextSelection) {
         trackTextSelection(collectorAddress);

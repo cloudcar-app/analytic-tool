@@ -48,7 +48,7 @@ export type SnowplowConfig = {
         * una lista de selectores correspondientes a los elementos HTML que 
         * se quieren trackear, junto con un identificador para reconocerlos 
         * más adelante en la base de datos.
-        
+    
         ```
         trackParticularClicks: {
             selectors: [
@@ -89,19 +89,72 @@ export type SnowplowConfig = {
      * solo requiere de un booleano para definir si se implementa o no. El 
      * evento que se envía contiene el texto seleccionado, la posicion del 
      * texto en la pantalla y si el usuario copió ese texto o no.
-     
-     ```
-     trackTextSelection: true
-     ```
-        */
-       trackTextSelection?: boolean;
-       trackStep?: TrackStep;
+
+        ```
+        trackTextSelection: true
+        ```
+     */
+    trackTextSelection?: boolean;
+    /**
+    * Este es otro tracker personalizado de CloudCar y envía eventos 
+    * al collector cada vez que el usuario hace hover sobre un elemento 
+    * html dentro de la página. 
+    * Su configuración requiere de una lista de selectores 
+    * correspondientes al los distintos elementos HTML que 
+    * se quieren trackear. El evento que se envía 
+    * consiste de un identificador del vehículo observavodo, un identificador del elemento,
+    * el innerText del elemento si es que tiene y el tiempo que el usuario hace hover
+    * sobre este.
+    
+    ```
+    trackHover: {
+        selectors: [
+            {
+                selector_id: 'Purcharse Button',
+                css_selector: '.BaseButton_Button',
+            },
+            {
+                selector_id: 'Car Image',
+                css_selector: '.Widget_ImageHeader',
+            },
+        ],
+    }
+    ```
+    */
+    trackHover?: TrackHover;
+     /**
+     * Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, 
+     * ya sea a través del botón continuar o un botón step. 
+     * Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear.
+     *  El evento que se envía consiste en el step donde estuvo el usuario, el tiempo que permaneció en el step,
+     *  un identificador del elemento, el innerText del elemento si es que tiene y el tiempo que el usuario hace hover sobre este.
+        
+       ```
+       trackStep: {
+           selectors: [
+               {
+                   selector_id: 'Next Button',
+                   css_selector: '.BaseButton_Button',
+               },
+               {
+                   selector_id: 'Step Button',
+                   css_selector: '.Widget_ImageHeader',
+               },
+           ],
+       }
+       ```
+     */
+    trackStep?: TrackStep;
 }
 
 export type TrackedElement = {
     id: string;
-    element: Element;
+    element: HTMLElement;
     step: string;
+}
+
+export type TrackHover = {
+    selectors?: (Selector)[];
 }
 
 export type TrackParticularClicks = {
