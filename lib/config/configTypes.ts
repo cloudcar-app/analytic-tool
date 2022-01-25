@@ -166,5 +166,5 @@ export type TrackPurchaseButtonClick = {
 }
 
 export type TrackStep = {
-    selectors?: (string)[] | null;
+    selectors?: (Selector)[];
 }

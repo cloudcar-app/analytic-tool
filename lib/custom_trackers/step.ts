@@ -1,6 +1,10 @@
 import generateJson from "../tools/generateJson";
-import { TrackStep } from '../config/configTypes';
+import { getUnseenElements } from '../tools/getUnseenElements';
 import getPurchaseIntentId from '../tools/getPurchaseIntentIdFromJwt'
+import { 
+  TrackStep,
+  TrackedElement,
+} from '../config/configTypes';
 import axios from 'axios';
 
 let startTime : number = 0;
@@ -29,18 +33,14 @@ function sendEvent(collector: string){
 const trackStep = (collector: string, config: TrackStep) => {
   startTime = (new Date()).getTime()
 
-  let relevantBtnStep: Array<Element> = [];
-  const selectors: string = config.selectors.join(', ');
+  let relevantElements: Array<TrackedElement> = [];
 
   setInterval(() => {
     //Array of elements from query
-    let newBtnStep: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
-    //Only elements that are not in relevantBtnStep
-    let filterElements: Array<Element> = newBtnStep.filter((btnStep: Element) => !relevantBtnStep.includes(btnStep))
-    relevantBtnStep.push(...filterElements);
-    //Add event to elements
-    filterElements.forEach((btnStep: Element) => {
-        btnStep.addEventListener('click', () => {
+    let newElements: Array<TrackedElement> = getUnseenElements(config.selectors, relevantElements);
+    relevantElements.push(...newElements);
+    newElements.forEach((btnStep: TrackedElement) => {
+        btnStep.element.addEventListener('click', () => {
           sendEvent(collector)
         });
     })
