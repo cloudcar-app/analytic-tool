@@ -142,3 +142,14 @@ trackStep: {
     ],
 }
 ```
+
+#### trackPagePingExtended
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada `time_interval` cantidad de segundos. Este envia información acerca del estado actual del usuario en la página (blur o focus) y la posición del mouse cada `mousePosInterval` segundos.
+
+```
+trackPagePingExtended: {
+    time_interval: 30,
+    mousePosInterval: 2
+}
+```
