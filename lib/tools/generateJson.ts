@@ -1,3 +1,5 @@
+import { getCookieDomainUserId } from '../tools/getCookieDomainUserId';
+
 export function generateJson(
     data: unknown,
     schema: string,
