@@ -104,3 +104,52 @@ Este es un tracker personalizado de CloudCar y envía eventos al collector cada 
 ```
 trackTextSelection: true
 ```
+
+#### trackHover
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario hace hover sobre un elemento HTML dentro de la página. Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear. El evento que se envía consiste de un identificador del vehículo observavodo, un identificador del elemento, el innerText del elemento si es que tiene y el tiempo que el usuario hace hover sobre este.
+        
+```
+trackHover: {
+    selectors: [
+        {
+            selector_id: 'Purcharse Button',
+            css_selector: '.BaseButton_Button',
+        },
+        {
+            selector_id: 'Car Image',
+            css_selector: '.Widget_ImageHeader',
+        },
+    ],
+}
+```
+
+#### trackStep
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, ya sea a través del botón continuar o un botón step. Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear. El evento que se envía consiste en el nombre step donde estuvo el usuario, el tiempo que permaneció en el step y un identificador del la compra (purchaseIntentId).
+        
+```
+trackStep: {
+    selectors: [
+        {
+            selector_id: 'Next Button',
+            css_selector: '.ant-btn.NextButton_NextButton__uJhUk.DefaultButton.PrimaryBaseButton',
+        },
+        {
+            selector_id: 'Step Button',
+            css_selector: '.ant-row.ant-row-middle.VerticalStepContainer.ClickableStep',
+        },
+    ],
+}
+```
+
+#### trackPagePingExtended
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada `time_interval` cantidad de segundos. Este envia información acerca del estado actual del usuario en la página (blur o focus) y la posición del mouse cada `mousePosInterval` segundos.
+
+```
+trackPagePingExtended: {
+    time_interval: 30,
+    mousePosInterval: 2
+}
+```
