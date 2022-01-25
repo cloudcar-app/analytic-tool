@@ -4,22 +4,37 @@ import {
     enableActivityTracking,
 } from '@snowplow/browser-tracker';
 import { DebuggerPlugin } from '@snowplow/browser-plugin-debugger';
+import { 
+    GeolocationPlugin, 
+    enableGeolocationContext 
+} from '@snowplow/browser-plugin-geolocation';
+import {
+    trackTextSelection,
+    trackPagePingExtended,
+    trackParticularClicks,
+    trackPurchaseButtonClick,
+    trackHover
+} from './custom_trackers/index';
 import { SnowplowConfig } from './config/configTypes'
-
-import trackPagePingExtended from './custom_trackers/page_ping_extended';
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
         appId: 'cloudcar-snowplow',
-        plugins: [DebuggerPlugin()],
+        plugins: [DebuggerPlugin(), GeolocationPlugin()],
         platform: 'web',
-        sessionCookieTimeout: 3600,
+        sessionCookieTimeout: 3600, // in seconds
         contexts: {
-        webPage: true,
+          webPage: true,
         },
     });
+    
+    enableGeolocationContext();
+    
     if (config.enableActivityTracking) {
-        enableActivityTracking(config.enableActivityTracking);
+        enableActivityTracking((typeof config.enableActivityTracking === 'boolean') ? {
+            minimumVisitLength: 30,
+            heartbeatDelay: 10,
+        } : config.enableActivityTracking);
     }
     if (config.trackPageView) {
         trackPageView();
@@ -27,7 +42,18 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     if (config.trackPagePingExtended) {
         trackPagePingExtended(collectorAddress, config.trackPagePingExtended)
     }
+    if(config.trackHover){
+        trackHover(collectorAddress, config.trackHover);
+    }
+    if (config.trackTextSelection) {
+        trackTextSelection(collectorAddress);
+    }
+    if (config.trackPurchaseButtonClick) {
+        trackPurchaseButtonClick(collectorAddress, config.trackPurchaseButtonClick);
+    }
+    if (config.trackParticularClicks) {
+        trackParticularClicks(collectorAddress, config.trackParticularClicks);
+    }
 }
 
 export { SnowplowConfig };
-  
