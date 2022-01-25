@@ -40,95 +40,98 @@ export type SnowplowConfig = {
         }
         ``` 
         */
-       enableActivityTracking: EnableActivityTracking | boolean;
-       /**
-        * Este es un tracker personalizado de CloudCar y envía eventos 
-        * al collector cada vez que el usuario hace click en algún elemento 
-        * HTML de interés para la organización. Su configuración requiere de 
-        * una lista de selectores correspondientes a los elementos HTML que 
-        * se quieren trackear, junto con un identificador para reconocerlos 
-        * más adelante en la base de datos.
-    
-        ```
-        trackParticularClicks: {
-            selectors: [
-                {
-                    selector_id: 'color 1',
-                    css_selector: 'div.ant-row:nth-child(4) div:nth-child(1)',
-                },
-                {
-                    selector_id: 'color 2',
-                    css_selector: 'div.ant-row:nth-child(4) div:nth-child(2)',
-                },
-            ],
-        }
-        ```
-        */
-       trackParticularClicks?: TrackParticularClicks;
-       /**
-        * Este es otro tracker personalizado de CloudCar y envía eventos 
-        * al collector cada vez que el usuario hace click en el botón de 
-        * compra. Su configuración requiere de una lista de selectores 
-        * correspondientes al botón de compra. El evento que se envía 
-        * consiste de un identificador del vehículo a comprar y el tiempo 
-        * que se demora el usuario en hacer click en el botón desde que 
+    enableActivityTracking: EnableActivityTracking | boolean;
+    /**
+     * Este es un tracker personalizado de CloudCar y envía eventos 
+     * al collector cada vez que el usuario hace click en algún elemento 
+     * HTML de interés para la organización. Su configuración requiere de 
+     * una lista de selectores correspondientes a los elementos HTML que 
+     * se quieren trackear, junto con un identificador para reconocerlos 
+     * más adelante en la base de datos.
+ 
+     ```
+     trackParticularClicks: {
+         selectors: [
+             {
+                 selector_id: 'color 1',
+                 css_selector: 'div.ant-row:nth-child(4) div:nth-child(1)',
+             },
+             {
+                 selector_id: 'color 2',
+                 css_selector: 'div.ant-row:nth-child(4) div:nth-child(2)',
+             },
+         ],
+     }
+     ```
+     */
+    trackParticularClicks?: TrackParticularClicks;
+    /**
+     * Este es otro tracker personalizado de CloudCar y envía eventos 
+     * al collector cada vez que el usuario hace click en el botón de 
+     * compra. Su configuración requiere de una lista de selectores 
+     * correspondientes al botón de compra. El evento que se envía 
+     * consiste de un identificador del vehículo a comprar y el tiempo 
+     * que se demora el usuario en hacer click en el botón desde que 
      * entró a la página.
-        
-        ```
-        trackPurchaseButtonClick: {
-            selectors: [
-                "#botonComprar"
-            ]
-        }
-        ```
-        */
-       trackPurchaseButtonClick?: TrackPurchaseButtonClick;
+     
+     ```
+     trackPurchaseButtonClick: {
+         selectors: [
+             "#botonComprar"
+         ]
+     }
+     ```
+     */
+    trackPurchaseButtonClick?: TrackPurchaseButtonClick;
     /**
      * Este es un tracker personalizado de CloudCar y envía eventos al 
      * collector cada vez que el usuario selecciona texto. Su configuración 
      * solo requiere de un booleano para definir si se implementa o no. El 
      * evento que se envía contiene el texto seleccionado, la posicion del 
      * texto en la pantalla y si el usuario copió ese texto o no.
-
-        ```
-        trackTextSelection: true
-        ```
+     
+     ```
+     trackTextSelection: true
+     ```
      */
     trackTextSelection?: boolean;
     /**
-    * Este es otro tracker personalizado de CloudCar y envía eventos 
-    * al collector cada vez que el usuario hace hover sobre un elemento 
-    * html dentro de la página. 
-    * Su configuración requiere de una lista de selectores 
-    * correspondientes al los distintos elementos HTML que 
-    * se quieren trackear. El evento que se envía 
-    * consiste de un identificador del vehículo observavodo, un identificador del elemento,
-    * el innerText del elemento si es que tiene y el tiempo que el usuario hace hover
-    * sobre este.
-    
-    ```
-    trackHover: {
-        selectors: [
-            {
-                selector_id: 'Purcharse Button',
-                css_selector: '.BaseButton_Button',
-            },
-            {
-                selector_id: 'Car Image',
-                css_selector: '.Widget_ImageHeader',
-            },
-        ],
+     * Este es otro tracker personalizado de CloudCar y envía eventos 
+     * al collector cada vez que el usuario hace hover sobre un elemento 
+     * html dentro de la página. 
+     * Su configuración requiere de una lista de selectores 
+     * correspondientes al los distintos elementos HTML que 
+     * se quieren trackear. El evento que se envía 
+     * consiste de un identificador del vehículo observavodo, un identificador del elemento,
+     * el innerText del elemento si es que tiene y el tiempo que el usuario hace hover
+     * sobre este.
+     
+     ```
+     trackHover: {
+         selectors: [
+             {
+                 selector_id: 'Purcharse Button',
+                 css_selector: '.BaseButton_Button',
+             },
+             {
+                 selector_id: 'Car Image',
+             css_selector: '.Widget_ImageHeader',
+         },
+     ],
     }
     ```
     */
     trackHover?: TrackHover;
-     /**
-     * Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, 
-     * ya sea a través del botón continuar o un botón step. 
-     * Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear.
-     *  El evento que se envía consiste en el nombre step donde estuvo el usuario, el tiempo que permaneció en el step,
-     *  un identificador del elemento y un identificador del la compra (purchaseIntentId).
-        
+    /**
+    * Este es un tracker personalizado de CloudCar y envía 
+    * eventos al collector cada vez que el usuario se cambia 
+    * de step, ya sea a través del botón continuar o un botón step. 
+    * Su configuración requiere de una lista de selectores 
+    * correspondientes al los distintos elementos HTML que se quieren trackear.
+    *  El evento que se envía consiste en el nombre step donde estuvo el usuario,
+    *  el tiempo que permaneció en el step, un identificador del elemento y
+    *  un identificador del la compra (purchaseIntentId).
+       
        ```
        trackStep: {
            selectors: [
@@ -143,8 +146,23 @@ export type SnowplowConfig = {
            ],
        }
        ```
-     */
+       */
     trackStep?: TrackStep;
+    /**
+    * Este es un tracker personalizado de CloudCar y envía eventos 
+    * al collector cada `time_interval` cantidad de segundos.
+    * Este envia información acerca del estado actual del usuario 
+    * en la página (blur o focus) y la posición del mouse cada 
+    * `mousePosInterval` segundos.
+    * 
+       ```
+       trackPagePingExtended: {
+            time_interval: 30,
+            mousePosInterval: 2
+        }
+       ```
+       */
+    trackPagePingExtended?: TrackPagePingExtended;
 }
 
 export type TrackedElement = {
@@ -155,6 +173,11 @@ export type TrackedElement = {
 
 export type TrackHover = {
     selectors?: (Selector)[];
+}
+
+export type TrackPagePingExtended = {
+    time_interval: number;
+    mousePosInterval: number;
 }
 
 export type TrackParticularClicks = {

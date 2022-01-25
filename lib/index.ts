@@ -10,6 +10,7 @@ import {
 } from '@snowplow/browser-plugin-geolocation';
 import {
     trackTextSelection,
+    trackPagePingExtended,
     trackParticularClicks,
     trackPurchaseButtonClick,
     trackStep,
@@ -27,7 +28,9 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
           webPage: true,
         },
     });
+    
     enableGeolocationContext();
+    
     if (config.enableActivityTracking) {
         enableActivityTracking((typeof config.enableActivityTracking === 'boolean') ? {
             minimumVisitLength: 30,
@@ -36,6 +39,9 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     }
     if (config.trackPageView) {
         trackPageView();
+    }
+    if (config.trackPagePingExtended) {
+        trackPagePingExtended(collectorAddress, config.trackPagePingExtended)
     }
     if (config.trackStep) {
         trackStep(collectorAddress, config.trackStep);
