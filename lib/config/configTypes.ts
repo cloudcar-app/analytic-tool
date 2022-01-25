@@ -126,8 +126,8 @@ export type SnowplowConfig = {
      * Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, 
      * ya sea a través del botón continuar o un botón step. 
      * Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear.
-     *  El evento que se envía consiste en el step donde estuvo el usuario, el tiempo que permaneció en el step,
-     *  un identificador del elemento, el innerText del elemento si es que tiene y el tiempo que el usuario hace hover sobre este.
+     *  El evento que se envía consiste en el nombre step donde estuvo el usuario, el tiempo que permaneció en el step,
+     *  un identificador del elemento y un identificador del la compra (purchaseIntentId).
         
        ```
        trackStep: {
