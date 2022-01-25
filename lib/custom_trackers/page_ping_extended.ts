@@ -33,7 +33,7 @@ const trackPagePingExtended = (collector: string, config :TrackPagePingExtended 
   // Mouse positions
   let mousePos: number[] = [];
   const currentMousePos: number[] = [0, 0];
-  window.addEventListener('mousemove', (event: Event) => {
+  window.addEventListener('mousemove', (event: MouseEvent) => {
     currentMousePos[0] = event.offsetX;
     currentMousePos[1] = event.offsetY;
   });
