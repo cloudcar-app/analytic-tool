@@ -95,6 +95,7 @@ export type SnowplowConfig = {
         ```
      */
     trackTextSelection?: boolean;
+    trackHover?: TrackHover;
 }
 
 export type TrackedElement = {
