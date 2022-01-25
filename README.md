@@ -123,3 +123,22 @@ trackHover: {
     ],
 }
 ```
+
+#### trackStep
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, ya sea a través del botón continuar o un botón step. Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear. El evento que se envía consiste en el nombre step donde estuvo el usuario, el tiempo que permaneció en el step y un identificador del la compra (purchaseIntentId).
+        
+```
+trackStep: {
+    selectors: [
+        {
+            selector_id: 'Next Button',
+            css_selector: '.ant-btn.NextButton_NextButton__uJhUk.DefaultButton.PrimaryBaseButton',
+        },
+        {
+            selector_id: 'Step Button',
+            css_selector: '.ant-row.ant-row-middle.VerticalStepContainer.ClickableStep',
+        },
+    ],
+}
+```
