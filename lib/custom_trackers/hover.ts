@@ -1,5 +1,10 @@
 import { generateJson } from '../tools/generateJson';
-import { TrackHover } from '../config/configTypes';
+import { getUnseenElements } from '../tools/getUnseenElements';
+import { findParentBySelector } from '../tools/findParentBySelector';
+import { 
+  TrackHover,
+  TrackedElement,
+} from '../config/configTypes';
 import axios from 'axios';
 
 let startTime : number = 0;
@@ -22,11 +27,14 @@ const leaveElement = (collector: string, element_id: string, inner_text: string)
   totalTime = endTime - startTime
   startTime = 0
 
+  const buttonContainer: Node | null = (event.target instanceof Element) ? findParentBySelector(event.target, '.cloudcar_button_container') : null
+
   const eventJson : any = generateJson({
-    element_id: element_id,
+    id_car: (buttonContainer) ? (<Element> buttonContainer).getAttribute('data-car-group-id') : 'null',
+    identifier: element_id,
     inner_text: inner_text,
     time: totalTime 
-  }, "hover");
+  }, "hover", "3-0-0");
 
   sendEvent(collector, eventJson)
   restarTimer()
@@ -38,21 +46,18 @@ function restarTimer(){
 }
 
 const trackHover= (collector: string, config :TrackHover):void=> {
-  console.log("dasdasdasdasdasdas")
-  let relevantElementHover: Array<Element> = [];
-  const selectors: string = config.selectors.join(', ');
+  let relevantElementHover: Array<TrackedElement> = [];
 
   setInterval(() => {
     //Array of elements from query
-    let newElementHover: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
+    let newElementHover: Array<TrackedElement> = getUnseenElements(config.selectors, relevantElementHover);
     //Only elements that are not in relevantElementHover
-    let filterElements: Array<Element> = newElementHover.filter((elementHover: Element) => !relevantElementHover.includes(elementHover))
-    relevantElementHover.push(...filterElements);
+    relevantElementHover.push(...newElementHover);
     //Add event to elements
-    filterElements.forEach((elementHover: HTMLElement) => {
-      elementHover.addEventListener('mouseenter', enterElement);
-      elementHover.addEventListener('mouseleave',() => {
-        leaveElement(collector, elementHover.id, elementHover.innerText)
+    newElementHover.forEach((elementHover: TrackedElement) => {
+      elementHover.element.addEventListener('mouseenter', enterElement);
+      elementHover.element.addEventListener('mouseleave',() => {
+        leaveElement(collector, elementHover.id, elementHover.element.innerText)
       });
     })
   }, 500)
