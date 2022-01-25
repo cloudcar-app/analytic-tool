@@ -1,5 +1,6 @@
 import generateJson from "../tools/generateJson";
 import { TrackStep } from '../config/configTypes';
+import getPurchaseIntentId from '../tools/getPurchaseIntentIdFromJwt'
 import axios from 'axios';
 
 let startTime : number = 0;
@@ -12,7 +13,11 @@ function finishTimer()
 }
 
 function sendEvent(collector: string){
-  const eventJson : any = generateJson({last_step: window.location.pathname, time: finishTimer()}, "step");
+  const eventJson : any = generateJson({
+    last_step: window.location.pathname, 
+    time: finishTimer(),
+    purchaseIntentId: '49036c0e-5904-413a-aac0-9f635b7ee837'
+  }, "steps");
 
   axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`, eventJson)
   .catch((error) => {
