@@ -9,10 +9,11 @@ import axios from 'axios';
 const sendEvent = (collector: string, id: string, step: string, event: Event) => {
   const eventJson: unknown = generateJson(
     {
-      selector_id: id,
+      identifier: id,
       step: step,
     },
-    'particular_clicks'
+    'particular_clicks',
+    '2-0-0'
   );
   axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`,
     eventJson
