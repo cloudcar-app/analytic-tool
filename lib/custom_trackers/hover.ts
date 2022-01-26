@@ -7,9 +7,9 @@ import {
 } from '../config/configTypes';
 import axios from 'axios';
 
-let startTime : number = 0;
-let endTime : number = 0
-let totalTime : number = 0
+let startTime : number = (new Date()).getTime();
+let endTime : number = (new Date()).getTime();
+let totalTime : number = 0;
 
 function sendEvent(collector: string, eventJson: object){
   axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`, eventJson)
@@ -25,7 +25,7 @@ const enterElement = () => {
 const leaveElement = (collector: string, element_id: string, inner_text: string)=>{
   endTime =  (new Date()).getTime();
   totalTime = endTime - startTime
-  startTime = 0
+  startTime = (new Date()).getTime();
 
   const buttonContainer: Node | null = (event.target instanceof Element) ? findParentBySelector(event.target, '.cloudcar_button_container') : null
 
@@ -41,8 +41,8 @@ const leaveElement = (collector: string, element_id: string, inner_text: string)
 };
 
 function restarTimer(){
-  startTime = 0
-  endTime = 0
+  startTime = (new Date()).getTime()
+  endTime = (new Date()).getTime()
 }
 
 const trackHover= (collector: string, config :TrackHover):void=> {
