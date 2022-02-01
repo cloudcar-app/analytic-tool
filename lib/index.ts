@@ -16,7 +16,8 @@ import {
     trackStep,
     trackHover
 } from './custom_trackers/index';
-import { SnowplowConfig } from './config/configTypes'
+import { SnowplowConfig } from './config/configTypes';
+import { getCookieByName } from './tools/getCookieByName';
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
@@ -38,7 +39,14 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
         } : config.enableActivityTracking);
     }
     if (config.trackPageView) {
-        trackPageView();
+        trackPageView({
+            context: [{
+                schema: 'iglu:cl.cloudcar/email_context/jsonschema/2-0-0',
+                data: {
+                  email: getCookieByName('userMail') || ''
+                }
+              }],
+        });
     }
     if (config.trackPagePingExtended) {
         trackPagePingExtended(collectorAddress, config.trackPagePingExtended)
