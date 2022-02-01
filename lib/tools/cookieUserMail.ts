@@ -1,16 +1,16 @@
 import getEncryptedUserMail from "./getEncryptedUserMail";
 import {createCookie, updateCookie, checkCookie} from "./cookieManagement"
 
-export function cookieUserMail(url:string) {
-    //const urlTest = "https://cloudcar.cl/emailtest/bXBvbmNlQGphamEuY2w="
-    const cookieKey: string = "userMail"
-    const email:string = getEncryptedUserMail(url)
-
+export function cookieUserMail() {
+    const cookieLifetimeInDays = 365;
+    const cookieKey: string = "userMail";
+    const email:string = getEncryptedUserMail();
+    if (!email) { return };
     if(checkCookie(cookieKey)){
-        updateCookie(cookieKey, email)
+        updateCookie(cookieKey, email);
     }
     else{
-        createCookie(cookieKey, email, 1)
+        createCookie(cookieKey, email, cookieLifetimeInDays);
     }
 }
 

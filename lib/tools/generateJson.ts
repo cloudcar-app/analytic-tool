@@ -1,4 +1,4 @@
-import { getCookieByName } from './getCookieByName';
+import { getCookieByName } from './cookieManagement';
 
 export function generateJson(
     data: unknown,
