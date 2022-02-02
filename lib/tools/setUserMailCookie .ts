@@ -1,12 +1,12 @@
 import getEncryptedUserMail from "./getEncryptedUserMail";
-import {createCookie, updateCookie, checkCookie} from "./cookieManagement"
+import {createCookie, updateCookie, checkIfdCookieExists} from "./cookieManager"
 
-export function cookieUserMail() {
+export function setUserMailCookie () {
     const cookieLifetimeInDays = 365;
     const cookieKey: string = "userMail";
     const email:string = getEncryptedUserMail();
     if (!email) { return };
-    if(checkCookie(cookieKey)){
+    if(checkIfdCookieExists(cookieKey)){
         updateCookie(cookieKey, email);
     }
     else{
@@ -14,4 +14,4 @@ export function cookieUserMail() {
     }
 }
 
-export default cookieUserMail;
+export default setUserMailCookie ;

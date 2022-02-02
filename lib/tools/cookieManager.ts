@@ -9,7 +9,7 @@ const updateCookie = (key:string, value:string) =>{
     document.cookie = `${key}=${value};secure`;
 }
 
-const checkCookie = (cookieName:string) => {
+const checkIfdCookieExists = (cookieName:string) => {
     var key:string = getCookieByName(cookieName);
     if (key!=""){
         return true;
@@ -30,6 +30,6 @@ const getCookieByName = (cookieName: string) => {
 export {
     createCookie,
     updateCookie,
-    checkCookie,
+    checkIfdCookieExists,
     getCookieByName
 };

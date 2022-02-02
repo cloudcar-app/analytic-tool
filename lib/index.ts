@@ -17,8 +17,8 @@ import {
     trackHover
 } from './custom_trackers/index';
 import { SnowplowConfig } from './config/configTypes';
-import { getCookieByName } from './tools/cookieManagement';
-import { cookieUserMail } from './tools/cookieUserMail';
+import { getCookieByName } from './tools/cookieManager';
+import { setUserMailCookie  } from './tools/setUserMailCookie ';
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
@@ -30,7 +30,8 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
           webPage: true,
         },
     });
-    cookieUserMail();
+
+    setUserMailCookie ();
     enableGeolocationContext();
     
     if (config.enableActivityTracking) {
