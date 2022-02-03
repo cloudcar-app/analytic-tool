@@ -153,3 +153,15 @@ trackPagePingExtended: {
     mousePosInterval: 2
 }
 ```
+
+#### Sobre `selectors`
+
+Para las configuraciones que utilicen el objeto `selectors`, existe una forma de
+añadir diferentes identificadores para elementos que comparten selector si su identificador se puede encontrar en un atributo del elemento HTML. Para aprovechar esta funcionalidad se debe escribir el identificador (`selector_id`) de la siguiente forma:
+```
+{
+    selector_id: 'Color: #alt#',
+    css_selector: 'div.ant-row:nth-child(4) img',
+}
+```
+En este caso el `css_selector` entregará diferentes `img` que representan un color, y el nombre del color se encuentra en el atributo `alt` del elemento. Finalmente, cuando los elementos gatillen un evento, el identificado de cada uno será: `'Color: Rojo'` o `'Color: Azul'`.

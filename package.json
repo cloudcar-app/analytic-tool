@@ -45,7 +45,9 @@
     "@snowplow/browser-plugin-geolocation": "^3.2.3",
     "@snowplow/browser-tracker": "^3.2.1",
     "axios": "^0.25.0",
-    "jwt-decode": "^3.1.2"
+    "base64url": "^3.0.1",
+    "jwt-decode": "^3.1.2",
+    "ncrypt-js": "^2.0.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/cloudcar-app"
