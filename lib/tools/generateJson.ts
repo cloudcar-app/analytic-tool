@@ -1,4 +1,4 @@
-import { getCookieDomainUserId } from '../tools/getCookieDomainUserId';
+import { getCookieByName } from './cookieManager';
 
 export function generateJson(
     data: unknown,
@@ -13,7 +13,7 @@ export function generateJson(
           e: 'ue',
           p: 'web',
           tv: 'node-1.0.2',
-          duid: getCookieDomainUserId('_sp_id.1fff'),
+          duid: getCookieByName('_sp_id.1fff')?.split('.')[0],
           ue_pr: JSON.stringify({
             schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
             data: {
