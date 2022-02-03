@@ -8,7 +8,11 @@ const setIdToTrackedElement = (selectorId: string, element: HTMLElement): string
     if (substrings.length < 3) { return selectorId; }
     for (let index = 1; index < substrings.length; index += 2) {
         const substring = substrings[index];
-        substrings[index] = element.getAttribute(substring) || 'null';
+        if (substring === 'inner_text') {
+            substrings[index] = element.innerText || 'null';
+        } else {
+            substrings[index] = element.getAttribute(substring) || 'null';
+        }
     }
     return substrings.join('')
 }
