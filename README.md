@@ -164,4 +164,13 @@ añadir diferentes identificadores para elementos que comparten selector si su i
     css_selector: 'div.ant-row:nth-child(4) img',
 }
 ```
-En este caso el `css_selector` entregará diferentes `img` que representan un color, y el nombre del color se encuentra en el atributo `alt` del elemento. Finalmente, cuando los elementos gatillen un evento, el identificado de cada uno será: `'Color: Rojo'` o `'Color: Azul'`.
+En este caso el `css_selector` entregará diferentes `img` que representan un color, y el nombre del color se encuentra en el atributo `alt` del elemento. Finalmente, cuando los elementos gatillen un evento, el identificado de cada uno será: `'Color: Rojo'` o `'Color: Azul'`. 
+
+Si el identificador es un atributo que se encuentra dentro de un elemento hijo del elemento que nos interesa, entonces se puede utilizar la siguiente sintaxis:
+```
+{
+    selector_id: 'Color: #img||alt#',
+    css_selector: 'div.ant-row:nth-child(4)',
+}
+```
+Es este caso nos interesa el evento que se gatille sobre el padre de la imagen, pero el identificador sigue siendo el `alt` de la imagen. Para esto se escribe antes del `||` el selector interno del elemento, y después el atributo que nos interesa.
