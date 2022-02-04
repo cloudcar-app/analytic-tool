@@ -26,8 +26,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
       - name: Authenticate with the GitHub Package Registry
         run:
-          echo "//npm.pkg.github.com:_authToken=${{ secrets.PACKAGES_ACCESS_TOKEN }}" >
-          ~/.npmrc
+          echo "//npm.pkg.github.com:_authToken=${{ secrets.PACKAGES_ACCESS_TOKEN }}" >> ~/.npmrc
       - run: |
          npm install
          npm version patch --force -m "Version %s"
