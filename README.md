@@ -104,3 +104,73 @@ Este es un tracker personalizado de CloudCar y envía eventos al collector cada 
 ```
 trackTextSelection: true
 ```
+
+#### trackHover
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario hace hover sobre un elemento HTML dentro de la página. Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear. El evento que se envía consiste de un identificador del vehículo observavodo, un identificador del elemento, el innerText del elemento si es que tiene y el tiempo que el usuario hace hover sobre este.
+        
+```
+trackHover: {
+    selectors: [
+        {
+            selector_id: 'Purcharse Button',
+            css_selector: '.BaseButton_Button',
+        },
+        {
+            selector_id: 'Car Image',
+            css_selector: '.Widget_ImageHeader',
+        },
+    ],
+}
+```
+
+#### trackStep
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada vez que el usuario se cambia de step, ya sea a través del botón continuar o un botón step. Su configuración requiere de una lista de selectores correspondientes al los distintos elementos HTML que se quieren trackear. El evento que se envía consiste en el nombre step donde estuvo el usuario, el tiempo que permaneció en el step y un identificador del la compra (purchaseIntentId).
+        
+```
+trackStep: {
+    selectors: [
+        {
+            selector_id: 'Next Button',
+            css_selector: '.ant-btn.NextButton_NextButton__uJhUk.DefaultButton.PrimaryBaseButton',
+        },
+        {
+            selector_id: 'Step Button',
+            css_selector: '.ant-row.ant-row-middle.VerticalStepContainer.ClickableStep',
+        },
+    ],
+}
+```
+
+#### trackPagePingExtended
+
+Este es un tracker personalizado de CloudCar y envía eventos al collector cada `time_interval` cantidad de segundos. Este envia información acerca del estado actual del usuario en la página (blur o focus) y la posición del mouse cada `mousePosInterval` segundos.
+
+```
+trackPagePingExtended: {
+    time_interval: 30,
+    mousePosInterval: 2
+}
+```
+
+#### Sobre `selectors`
+
+Para las configuraciones que utilicen el objeto `selectors`, existe una forma de
+añadir diferentes identificadores para elementos que comparten selector si su identificador se puede encontrar en un atributo del elemento HTML. Para aprovechar esta funcionalidad se debe escribir el identificador (`selector_id`) de la siguiente forma:
+```
+{
+    selector_id: 'Color: #alt#',
+    css_selector: 'div.ant-row:nth-child(4) img',
+}
+```
+En este caso el `css_selector` entregará diferentes `img` que representan un color, y el nombre del color se encuentra en el atributo `alt` del elemento. Finalmente, cuando los elementos gatillen un evento, el identificado de cada uno será: `'Color: Rojo'` o `'Color: Azul'`. 
+
+Si el identificador es un atributo que se encuentra dentro de un elemento hijo del elemento que nos interesa, entonces se puede utilizar la siguiente sintaxis:
+```
+{
+    selector_id: 'Color: #img||alt#',
+    css_selector: 'div.ant-row:nth-child(4)',
+}
+```
+Es este caso nos interesa el evento que se gatille sobre el padre de la imagen, pero el identificador sigue siendo el `alt` de la imagen. Para esto se escribe antes del `||` el selector interno del elemento, y después el atributo que nos interesa.
