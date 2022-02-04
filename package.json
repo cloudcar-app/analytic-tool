@@ -1,6 +1,6 @@
 {
   "name": "@cloudcar-app/analytic-tool",
-  "version": "1.2.289",
+  "version": "1.2.290",
   "description": "This is a library to help on the development for cloud car",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
