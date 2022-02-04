@@ -4,10 +4,17 @@ import {
 } from '../config/configTypes';
 
 const setIdToTrackedElement = (selectorId: string, element: HTMLElement): string => {
+    let originalElement: HTMLElement = element;
     const substrings: string[] = selectorId.split('#') 
     if (substrings.length < 3) { return selectorId; }
     for (let index = 1; index < substrings.length; index += 2) {
-        const substring = substrings[index];
+        element = originalElement;
+        let substring = substrings[index];
+        if (substring.split('||').length === 2) {
+            let selector: string;
+            [selector, substring] = substring.split('||');
+            element = originalElement.querySelector(selector);
+        }
         if (substring === 'inner_text') {
             substrings[index] = element.innerText || 'null';
         } else {
