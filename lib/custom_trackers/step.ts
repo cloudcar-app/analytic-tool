@@ -16,9 +16,9 @@ function finishTimer()
   return totalTime
 }
 
-function sendEvent(collector: string){
+function sendEvent(collector: string, stepName: string){
   const eventJson : any = generateJson({
-    last_step: window.location.pathname, 
+    last_step: stepName, 
     time: finishTimer(),
     purchaseIntentId: '49036c0e-5904-413a-aac0-9f635b7ee837'
   }, "steps");
@@ -41,7 +41,9 @@ const trackStep = (collector: string, config: TrackStep) => {
     relevantElements.push(...newElements);
     newElements.forEach((btnStep: TrackedElement) => {
         btnStep.element.addEventListener('click', () => {
-          sendEvent(collector)
+          const currentStep: HTMLElement | null = document.querySelector('.VerticalStepLabelActive');
+          const stepName: string = currentStep ? currentStep.innerText : '';
+          sendEvent(collector, stepName);
         });
     })
   }, 500)
