@@ -27,9 +27,28 @@ const getCookieByName = (cookieName: string) => {
     }
 }
 
+function getSnowplowCookie(cookieName: string) {
+    var matcher = new RegExp('_sp_' + 'id\\.[a-f0-9]+=([^;]+);?');
+    var match = document.cookie.match(matcher);
+    if (match && match[1]) {
+        if(cookieName == "duid"){
+            return match[1].split('.')[0];
+        }
+        else if(cookieName == "sid"){
+            return match[1].split('.')[5];
+        }
+        else{
+            false
+        }
+    } else {
+      return false;
+    }
+}
+
 export {
     createCookie,
     updateCookie,
     checkIfdCookieExists,
-    getCookieByName
+    getCookieByName,
+    getSnowplowCookie
 };
