@@ -14,6 +14,7 @@ export function generateJson(
           p: 'web',
           tv: 'node-1.0.2',
           duid: getCookieByName('_sp_id.1fff')?.split('.')[0],
+          sid: getCookieByName('_sp_id.1fff')?.split('.')[5],
           ue_pr: JSON.stringify({
             schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
             data: {

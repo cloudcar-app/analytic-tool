@@ -6,14 +6,15 @@ import {
 } from '../config/configTypes';
 import axios from 'axios';
 
-const sendEvent = (collector: string, id: string, step: string, event: Event) => {
+const sendEvent = (collector: string, id: string, step: string, defaultValue: boolean, event?: Event) => {
   const eventJson: unknown = generateJson(
     {
       identifier: id,
       step: step,
+      default_value: defaultValue
     },
     'particular_clicks',
-    '2-0-0'
+    '3-0-0'
   );
   axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`,
     eventJson
@@ -28,8 +29,9 @@ const trackParticularClicks = (collector: string, config: TrackParticularClicks)
     let newElements: Array<TrackedElement> = getUnseenElements(config.selectors, relevantElements);
     relevantElements.push(...newElements);
     newElements.forEach((trackedElement: TrackedElement) => {
+      sendEvent(collector, trackedElement.id, trackedElement.step, true);
       trackedElement.element.addEventListener('click', (event: Event) => {
-        sendEvent(collector, trackedElement.id, trackedElement.step, event);
+        sendEvent(collector, trackedElement.id, trackedElement.step, false, event);
       });
     }) 
   }, 500)
