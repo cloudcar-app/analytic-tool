@@ -6,6 +6,11 @@ import {
   TrackedElement,
 } from '../config/configTypes';
 import axios from 'axios';
+import {
+  createContexts,
+  Context
+} from '../tools/createContexts';
+import { getCarInfo } from '../tools/getCarInfo';
 
 let startTime : number = (new Date()).getTime();
 let endTime : number = (new Date()).getTime();
@@ -28,13 +33,33 @@ const leaveElement = (collector: string, element_id: string, inner_text: string)
   startTime = (new Date()).getTime();
 
   const buttonContainer: Node | null = (event.target instanceof Element) ? findParentBySelector(event.target, '.cloudcar_button_container') : null
-
+  const contexts: Context[] = []
+  if (buttonContainer) {
+    contexts.push(
+      {
+      name: 'car_context',
+      version: '1-0-0',
+      data: getCarInfo(<HTMLElement>buttonContainer)
+    },
+    {
+      name: 'concessionaire_context',
+      version: '1-0-0',
+      data: {
+        concessionaire_name: (<HTMLElement>buttonContainer).getAttribute('data-concessionaire-name')
+      },
+    },
+    )
+  }
   const eventJson : any = generateJson({
     id_car: (buttonContainer) ? (<Element> buttonContainer).getAttribute('data-car-group-id') : 'null',
     identifier: element_id,
     inner_text: inner_text,
     time: totalTime 
-  }, "hover", "3-0-0");
+  }, 
+  "hover",
+  "3-0-0",
+  createContexts(contexts)
+  );
 
   sendEvent(collector, eventJson)
   restarTimer()
