@@ -11,7 +11,7 @@ const addContexts = (
   generalContexts: unknown[],
   particularContexts: unknown[],
 ): unknown => {
-  if (!generalContexts && !particularContexts) { return eventJson }
+  if (generalContexts.length + particularContexts.length == 0) { return eventJson }
   const contextsJson: string = JSON.stringify({
     schema: "iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0",
     data: generalContexts.concat(particularContexts)
