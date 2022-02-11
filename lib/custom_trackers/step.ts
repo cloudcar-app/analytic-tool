@@ -20,7 +20,7 @@ function sendEvent(collector: string, stepName: string){
   const eventJson : any = generateJson({
     last_step: stepName, 
     time: finishTimer(),
-    purchaseIntentId: '49036c0e-5904-413a-aac0-9f635b7ee837'
+    purchaseIntentId: getPurchaseIntentId()
   }, "steps");
 
   axios.post(`${collector}/com.snowplowanalytics.snowplow/tp2`, eventJson)
