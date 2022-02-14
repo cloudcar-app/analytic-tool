@@ -37,17 +37,10 @@ const leaveElement = (collector: string, element_id: string, inner_text: string)
   if (buttonContainer) {
     contexts.push(
       {
-      name: 'car_context',
-      version: '1-0-0',
-      data: getCarInfo(<HTMLElement>buttonContainer)
-    },
-    {
-      name: 'concessionaire_context',
-      version: '1-0-0',
-      data: {
-        concessionaire_name: (<HTMLElement>buttonContainer).getAttribute('data-concessionaire-name')
+        name: 'car_context',
+        version: '1-0-0',
+        data: getCarInfo(<HTMLElement>buttonContainer)
       },
-    },
     )
   }
   const eventJson : any = generateJson({
