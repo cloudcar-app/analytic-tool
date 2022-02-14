@@ -19,6 +19,7 @@ import {
 import { SnowplowConfig } from './config/configTypes';
 import { getCookieByName } from './tools/cookieManager';
 import { setUserMailCookie  } from './tools/setUserMailCookie ';
+import { findParentBySelector } from './tools/findParentBySelector';
 
 export function enableSnowplow(collectorAddress: string, config: SnowplowConfig): void {
     newTracker('cloudcar', collectorAddress, {
@@ -42,12 +43,20 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     }
     if (config.trackPageView) {
         trackPageView({
-            context: [{
-                schema: 'iglu:cl.cloudcar/email_context/jsonschema/2-0-0',
-                data: {
-                  email: getCookieByName('userMail') || ''
-                }
-              }],
+            context: [
+                {
+                    schema: 'iglu:cl.cloudcar/email_context/jsonschema/2-0-0',
+                    data: {
+                    email: getCookieByName('userMail') || ''
+                    }
+                },
+                {
+                    schema: 'iglu:cl.cloudcar/concessionaire_context/jsonschema/1-0-0',
+                    data: {
+                        concessionaire_name: (<HTMLElement>document.querySelector('.cloudcar_button_container')).getAttribute('data-concessionaire-name')
+                    }
+                },
+            ],
         });
     }
     if (config.trackPagePingExtended) {
