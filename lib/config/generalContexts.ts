@@ -7,7 +7,8 @@ export const generalContexts = createContexts([
         data: {
             concessionaire_name: (() => {
                 const container: HTMLElement | null = document.querySelector('.cloudcar_button_container')
-                return container ? container.getAttribute('data-concessionaire-name') : ''
+                const title: HTMLElement | null = document.querySelector('title')
+                return container ? container.getAttribute('data-concessionaire-name') : (title.innerText || '')
             })()
         }
     }
