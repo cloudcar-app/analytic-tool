@@ -27,6 +27,8 @@ jobs:
       - name: Authenticate with the GitHub Package Registry
         run:
           echo "//npm.pkg.github.com:_authToken=${{ secrets.PACKAGES_ACCESS_TOKEN }}" >> ~/.npmrc
+      - name: npm 8
+        run: npm i -g npm@8 --registry=https://registry.npmjs.org
       - run: |
          npm install
          npm version patch --force -m "Version %s"
