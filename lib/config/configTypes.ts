@@ -42,6 +42,18 @@ export type SnowplowConfig = {
         */
     enableActivityTracking: EnableActivityTracking | boolean;
     /**
+     * Este tracker ocupa un plugin de _Snowplow_ para obtener
+     * la geolocalización del usuario. Este plugin requiere
+     * que el usuario acepte el uso de su ubicación.
+     * La configuración Este no necesita una configuración por 
+     * lo que para ser implementado o no basta con incluir un booleano 
+     * en la configuración de _Snowplow_.
+     * ```
+     enableLocationTracking: true
+     ```
+     */
+    enableLocationTracking?: boolean;
+    /**
      * Este es un tracker personalizado de CloudCar y envía eventos 
      * al collector cada vez que el usuario hace click en algún elemento 
      * HTML de interés para la organización. Su configuración requiere de 
