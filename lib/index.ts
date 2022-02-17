@@ -33,7 +33,10 @@ export function enableSnowplow(collectorAddress: string, config: SnowplowConfig)
     });
 
     setUserMailCookie ();
-    enableGeolocationContext();
+    
+    if (config.enableLocationTracking) {
+        enableGeolocationContext();
+    }
     
     if (config.enableActivityTracking) {
         enableActivityTracking((typeof config.enableActivityTracking === 'boolean') ? {
