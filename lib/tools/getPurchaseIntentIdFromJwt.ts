@@ -6,7 +6,9 @@ interface JwtToken {
 }
 
 const getPurchaseIntentId = (): string => {
-  const token = localStorage.getItem('AccessToken') as string;
+  const token = (window.top || window).localStorage.getItem(
+    'AccessToken',
+  ) as string;
   if (token) {
     const decodedToken: JwtToken = jwtDecode(token);
     return decodedToken.purchaseIntentId;
