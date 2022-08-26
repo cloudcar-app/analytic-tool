@@ -34,7 +34,9 @@ const trackPurchaseButtonClick = (collector: string, config: TrackPurchaseButton
   let relevantElements: Array<Element> = [];
   const selectors: string = config.selectors.join(', ');
   setInterval(() => {
-    let newElements: Array<Element> = Array.from(window.document.querySelectorAll(selectors));
+    let newElements: Array<Element> = Array.from(
+      (window.top || window).document.querySelectorAll(selectors),
+    );
     let filteredElements: Array<Element> = newElements.filter((element: Element) => !relevantElements.includes(element));
     relevantElements.push(...filteredElements);
     filteredElements.forEach((element: Element) => {
