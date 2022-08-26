@@ -35,7 +35,11 @@ export const getUnseenElements = (
     ): Array<TrackedElement> => {
     let newElements: Array<TrackedElement> = [];
     selectors.forEach((selector: Selector) => {
-        let queryElements: Array<HTMLElement> = Array.from(window.document.querySelectorAll(selector.css_selector))
+        let queryElements: Array<HTMLElement> = Array.from(
+          (window.top || window).document.querySelectorAll(
+            selector.css_selector,
+          ),
+        );
         newElements.push(
             ...queryElements.map((element: HTMLElement) => ({
                 id: setIdToTrackedElement(selector.selector_id, element),

@@ -27,13 +27,13 @@ const trackPagePingExtended = (collector: string, config :TrackPagePingExtended 
     onBlur(focusInterval);
   };
 
-  window.addEventListener('focus', focused);
-  window.addEventListener('blur', blurred);
+  (window.top || window).addEventListener('focus', focused);
+  (window.top || window).addEventListener('blur', blurred);
 
   // Mouse positions
   let mousePos: number[] = [];
   const currentMousePos: number[] = [0, 0];
-  window.addEventListener('mousemove', (event: MouseEvent) => {
+  (window.top || window).addEventListener('mousemove', (event: MouseEvent) => {
     currentMousePos[0] = event.offsetX;
     currentMousePos[1] = event.offsetY;
   });
